@@ -1,5 +1,8 @@
 # Flatstack Game
 ### Sandbox project
+
+[![Build Status](https://semaphoreci.com/api/v1/vladimirbazhanov/flatstack-game/branches/master/shields_badge.svg)](https://semaphoreci.com/vladimirbazhanov/flatstack-game)
+
 ## Getting Started
 
 ### Bootstrap application
