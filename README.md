@@ -2,7 +2,9 @@
 ### Sandbox project
 
 [![Build Status](https://semaphoreci.com/api/v1/vladimirbazhanov/flatstack-game/branches/master/shields_badge.svg)](https://semaphoreci.com/vladimirbazhanov/flatstack-game)
-
+[![Code Climate](https://codeclimate.com/github/vladimirbazhanov/flatstack-game/badges/gpa.svg)](https://codeclimate.com/github/vladimirbazhanov/flatstack-game)
+[![Test Coverage](https://codeclimate.com/github/vladimirbazhanov/flatstack-game/badges/coverage.svg)](https://codeclimate.com/github/vladimirbazhanov/flatstack-game/coverage)
+[![Issue Count](https://codeclimate.com/github/vladimirbazhanov/flatstack-game/badges/issue_count.svg)](https://codeclimate.com/github/vladimirbazhanov/flatstack-game)
 ## Getting Started
 
 ### Bootstrap application
