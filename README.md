@@ -12,7 +12,7 @@
 1. Clone application.
 
    ```bash
-   git clone git@github.com:vladimirbazhanov/flatstack-game.git
+   git clone https://github.com/vladimirbazhanov/flatstack-game.git
    ```
 3. Run setup script
 
