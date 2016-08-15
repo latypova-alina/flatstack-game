@@ -1,7 +1,5 @@
 defaults: &defaults
   host: localhost
-  username: fl_user_2
-  password: 123456
   adapter: postgresql
   encoding: unicode
   min_messages: warning
