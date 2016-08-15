@@ -4,6 +4,9 @@ ruby "2.3.1"
 
 gem "rails", "4.2.7.1"
 gem "pg"
+gem "activeadmin", github: 'activeadmin'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+gem 'ransack',             github: 'activerecord-hackery/ransack'
 
 # assets
 gem "autoprefixer-rails"
