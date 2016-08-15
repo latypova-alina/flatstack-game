@@ -1,4 +1,5 @@
 defaults: &defaults
+  host: localhost
   adapter: postgresql
   encoding: unicode
   min_messages: warning
