@@ -7,6 +7,10 @@ FactoryGirl.define do
     confirmed_at 1.hour.ago
   end
 
+  trait :administrator do
+    role "administrator"
+  end
+
   trait :not_confirmed do
     confirmed_at nil
 
