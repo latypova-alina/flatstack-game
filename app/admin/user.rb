@@ -1,9 +1,11 @@
 ActiveAdmin.register User do
-  permit_params :email, :full_name, :password, :password_confirmation, :role
+  permit_params :email, :full_name, :password, :password_confirmation, :role, :created_at
 
   index do
     column :full_name
     column :email
+    column :role
+    column :created_at
     actions
   end
 
