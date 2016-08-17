@@ -5,8 +5,7 @@ class Question < ActiveRecord::Base
   validate :right_answers
 
   def answers_count
-    errors.add(:question, "have not enough answers") if answers.size < 4
-    errors.add(:question, "can't have more than four answers") if answers.size > 4
+    errors.add(:question, "should have 4 answers") if answers.count != 4
   end
 
   def right_answers
