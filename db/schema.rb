@@ -10,7 +10,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 20160817124241) do
+
+ActiveRecord::Schema.define(version: 20160818125001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +52,16 @@ ActiveRecord::Schema.define(version: 20160817124241) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "round_questions", force: :cascade do |t|
+    t.integer  "round_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "round_questions", ["question_id"], name: "index_round_questions_on_question_id", using: :btree
+  add_index "round_questions", ["round_id"], name: "index_round_questions_on_round_id", using: :btree
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "game_id"
