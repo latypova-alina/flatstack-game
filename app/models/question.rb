@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   has_many :answers
   belongs_to :round_questions
-  belongs_to :rounds, through: :round_questions
+  belongs_to :round, through: :round_questions
 
   validate :answers_count
   validate :right_answers
