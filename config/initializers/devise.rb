@@ -255,5 +255,7 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
   config.omniauth :facebook, ENV.fetch("FACEBOOK_ID"), ENV.fetch("FACEBOOK_SECRET")
+  config.omniauth :vkontakte, ENV.fetch("VK_ID"), ENV.fetch("VK_SECRET")
+  config.omniauth :google_oauth2, ENV.fetch("GOOGLE_ID"), ENV.fetch("GOOGLE_SECRET")
 
 end

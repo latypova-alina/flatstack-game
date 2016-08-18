@@ -47,6 +47,7 @@ gem "stackprof"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-vkontakte'
+gem "omniauth-google-oauth2"
 
 group :staging, :production do
   gem "newrelic_rpm"
