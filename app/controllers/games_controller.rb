@@ -1,18 +1,23 @@
 class GamesController < ApplicationController
   def index
+    @games = Game.all
   end
 
   def new
+    @game = Game.new
   end
 
   def create
-    @game = Game.new
-    if @game.save
-      flash[:notice] = "Game successfully created."
+    @game = Game.new(params[:game])
+    @game.player_1 = current_user.id
+    @game.state = "search"
+
+    flash[:notice] = if @game.save
+      "Game successfully created."
     else
-      flash[:notice] = "Error creating game."
+      "Error creating game."
     end
-    
-    redirect_to root_url
+
+    redirect_to action: :index
   end
 end

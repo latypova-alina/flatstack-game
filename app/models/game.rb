@@ -1,10 +1,11 @@
 class Game < ActiveRecord::Base
-  has_many :rounds
+  has_many :rounds, dependent: :destroy
   validates :player_1, presence: true
   validates :state, inclusion: { in: %w(search started finished) }
 
-  before_save do
-    self.state = 'search'
-    self.player_1 = current_user.id
+  after_create do
+    3.times do
+      rounds.create
+    end
   end
 end

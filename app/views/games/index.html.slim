@@ -1,3 +1,7 @@
-.row
-  h1 Мои игры
-  == button_to "Create game", action: "create"
+- if user_signed_in?
+  .row
+    h1 Мои игры
+    - @games.each do |g|
+      div #{g.id}. Game status: #{g.state}.
+
+    == button_to "New game", action: "create"
