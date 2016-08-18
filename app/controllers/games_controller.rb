@@ -1,15 +1,16 @@
 class GamesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @games = Game.all
+    @games = current_user.games.all
   end
 
   def new
-    @game = Game.new
+    @game = current_user.games.new
   end
 
   def create
-    @game = Game.new(params[:game])
-    @game.player_1 = current_user.id
+    @game = current_user.games.new(params[:game])
     @game.state = "search"
 
     flash[:notice] = if @game.save
