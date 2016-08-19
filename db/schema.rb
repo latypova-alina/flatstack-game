@@ -53,15 +53,28 @@ ActiveRecord::Schema.define(version: 20160818125001) do
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
+  create_table "round_qestions", force: :cascade do |t|
+=======
   create_table "round_questions", force: :cascade do |t|
+>>>>>>> upstream/master
     t.integer  "round_id"
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+<<<<<<< HEAD
+  create_table "round_questions", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "round_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+=======
   add_index "round_questions", ["question_id"], name: "index_round_questions_on_question_id", using: :btree
   add_index "round_questions", ["round_id"], name: "index_round_questions_on_round_id", using: :btree
+>>>>>>> upstream/master
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "game_id"
@@ -69,8 +82,11 @@ ActiveRecord::Schema.define(version: 20160818125001) do
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
+=======
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
+>>>>>>> upstream/master
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",     null: false
     t.string   "encrypted_password",     default: "",     null: false
