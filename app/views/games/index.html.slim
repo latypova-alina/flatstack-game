@@ -1,7 +1,9 @@
-- if user_signed_in?
-  .row
-    h1 Мои игры
-    - @games.each do |g|
-      div Game status: #{g.state}.
+.row
+  .medium-6.medium-centered.columns
+    = link_to "Начать новую игру", new_game_path, class: "button"
 
-    == button_to "New game", action: "create"
+.row
+  h3 Мои игры
+  ul.my-games
+    - @games.each do |game|
+      li = link_to "Игра № #{game.id} (#{game.state})", game

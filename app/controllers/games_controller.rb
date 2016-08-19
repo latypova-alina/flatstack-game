@@ -10,8 +10,9 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = current_user.games.new(params[:game])
-    @game.state = "search"
+    @game = current_user.games.create state: "new"
+
+    @game.build_rounds
 
     flash[:notice] = if @game.save
       "Game successfully created."
