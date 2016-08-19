@@ -3,7 +3,8 @@ FactoryGirl.define do
     id 1
     player_1 1
     player_2 nil
-    state "search"
+    state "new"
+
     before(:create) do
       create(:user, id: 1)
       create(:round, game_id: 1)

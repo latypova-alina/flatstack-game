@@ -8,6 +8,7 @@ FactoryGirl.define do
   end
 
   trait :administrator do
+    email { generate(:administrator_email) }
     role "administrator"
   end
 
