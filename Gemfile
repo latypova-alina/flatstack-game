@@ -44,9 +44,9 @@ gem "responders"
 gem "rollbar"
 gem "seedbank"
 gem "stackprof"
-gem 'omniauth'
-gem 'omniauth-facebook'
-gem 'omniauth-vkontakte'
+gem "omniauth"
+gem "omniauth-facebook"
+gem "omniauth-vkontakte"
 gem "omniauth-google-oauth2"
 
 group :staging, :production do
