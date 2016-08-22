@@ -4,4 +4,8 @@ class ApplicationDecorator < Draper::Decorator
   def self.collection_decorator_class
     PaginatingDecorator
   end
+
+  def method_missing(sym, *args, &block)
+    object.public_send sym, *args, &block
+  end
 end

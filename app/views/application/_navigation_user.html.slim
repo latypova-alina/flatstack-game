@@ -3,6 +3,9 @@ ul.right
     li.has-dropdown
       a.user-dropdown(href="#") = current_user.full_name_with_email
       ul.dropdown
+        - if current_user.administrator?
+          li
+            = link_to "Administrate", admin_root_path
         li
           = link_to "Edit profile", edit_user_registration_path
         li
