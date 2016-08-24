@@ -1,11 +1,16 @@
 class Game < ActiveRecord::Base
   has_many :rounds, dependent: :destroy
 
-  belongs_to :user, foreign_key: "player_1"
+  belongs_to :first_player, class_name: "User", foreign_key: "first_player_id"
+  belongs_to :second_player, class_name: "User", foreign_key: "second_player_id"
 
-  validates :player_1, presence: true
+  enum state: {
+    waiting_for_second_player: "waiting_for_second_player",
+    in_progress: "in_progress",
+    finished: "finished"
+  }
 
-  def build_rounds
-    3.times { rounds << rounds.create }
+  def both_players?
+    first_player && second_player
   end
 end

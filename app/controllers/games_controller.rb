@@ -1,25 +1,31 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+  expose(:games) { games_fetcher }
 
   def index
-    @games = current_user.games.all
   end
 
   def new
-    @game = current_user.games.new
   end
 
   def create
-    @game = current_user.games.create state: "new"
+    game = Game.new state: :waiting_for_second_player,
+                    first_player: current_user
 
-    @game.build_rounds
+    game.second_player = User.bots.random.first if params[:type] == "bot"
 
-    flash[:notice] = if @game.save
-      "Game successfully created."
-    else
-      "Error creating game."
-    end
+    game.state = :in_progress if game.both_players?
 
-    redirect_to action: :index
+    game.save
+
+    respond_with game
+  end
+
+  private
+
+  def games_fetcher
+    Game.includes(:first_player)
+        .includes(:second_player)
+        .where("first_player_id = ? OR second_player_id = ?", current_user.id, current_user.id)
   end
 end
