@@ -2,5 +2,5 @@
   .medium-6.medium-centered.columns
     h3 Выбрать соперника
     .row
-    .small-6.columns = link_to "Человек", games_path(type: "human"), method: :post, class: "button pull-left"
+    .small-6.columns = link_to "Человек", games_path, method: :post, class: "button pull-left"
     .small-6.columns = link_to "Бот", games_path(type: "bot"), method: :post, class: "button pull-right"

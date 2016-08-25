@@ -1,12 +1,24 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :confirmable,
-    :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers:
-    %i(facebook vkontakte google_oauth2)
+  devise :database_authenticatable,
+    :registerable,
+    :confirmable,
+    :recoverable,
+    :rememberable,
+    :trackable,
+    :validatable,
+    :omniauthable,
+    omniauth_providers: %i(facebook vkontakte google_oauth2)
 
   validates :full_name, presence: true
 
-  has_many :games, dependent: :destroy, foreign_key: "player_1"
-  enum role: { user: "user", administrator: "administrator" }
+  scope :bots, -> { where role: "bot" }
+  scope :random, -> { order("RANDOM()") }
+
+  enum role: {
+    bot: "bot",
+    user: "user",
+    administrator: "administrator"
+  }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

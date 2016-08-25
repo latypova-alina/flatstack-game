@@ -12,5 +12,6 @@ vendor/ruby
 ._*
 .env
 .pryrc
+config/database.yml
 .idea
 config/database.yml

@@ -12,6 +12,11 @@ FactoryGirl.define do
     role "administrator"
   end
 
+  trait :bot do
+    email { generate(:bot_email) }
+    role "bot"
+  end
+
   trait :not_confirmed do
     confirmed_at nil
 
