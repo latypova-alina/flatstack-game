@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   has_many :answers
   has_one :round_question
-  accepts_nested_attributes_for :answers, :allow_destroy => true
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
   validate :right_answers
 
