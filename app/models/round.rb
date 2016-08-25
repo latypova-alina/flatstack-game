@@ -2,7 +2,6 @@ class Round < ActiveRecord::Base
   belongs_to :game
 
   has_many :round_questions, dependent: :destroy
-  has_many :questions, through: :round_questions
 
   after_create do
     4.times do

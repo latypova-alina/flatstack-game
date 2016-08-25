@@ -4,6 +4,8 @@ defaults: &defaults
   encoding: unicode
   min_messages: warning
   timeout: 5000
+  username: <%= ENV.fetch("USER_NAME", File.basename(Rails.root)) %>
+  password: <%= ENV.fetch("USER_PASSWORD", File.basename(Rails.root)) %>
   pool: <%= [ENV.fetch("MAX_THREADS", 5), ENV.fetch("DB_POOL", 5)].max %>
 
 development:
