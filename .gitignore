@@ -14,4 +14,3 @@ vendor/ruby
 .pryrc
 config/database.yml
 .idea
-config/database.yml
