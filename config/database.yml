@@ -4,6 +4,8 @@ defaults: &defaults
   encoding: unicode
   min_messages: warning
   timeout: 5000
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
   pool: <%= [ENV.fetch("MAX_THREADS", 5), ENV.fetch("DB_POOL", 5)].max %>
 
 development:

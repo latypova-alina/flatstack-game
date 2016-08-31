@@ -1,9 +1,7 @@
 class Question < ActiveRecord::Base
   has_many :answers
-  belongs_to :round_questions
-  has_one :round, through: :round_questions
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
-  validate :answers_count
   validate :right_answers
 
   def answers_count
