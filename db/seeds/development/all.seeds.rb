@@ -5,14 +5,14 @@ require "csv"
 FactoryGirl.create :user, :administrator
 FactoryGirl.create :user, :bot
 
-CSV.foreach("public/questions.csv", headers: true, header_converters: :symbol) do |row|
+CSV.foreach("db/seeds/questions.csv", headers: true, header_converters: :symbol) do |row|
   row = row.to_hash
 
   category = Category.find_or_create_by name: row[:category]
 
   next if Question.where(question: row[:question]).any?
 
-  question = Question.create(question: row[:question])
+  question = Question.create(question: row[:question], category: category)
 
   question.answers.create(answer: row[:right_answer], truthy: 1)
   question.answers.create(answer: row[:wrong_answer_1], truthy: 0)
