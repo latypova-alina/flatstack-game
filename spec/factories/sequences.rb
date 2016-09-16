@@ -4,4 +4,5 @@ FactoryGirl.define do
   sequence(:administrator_email) { |n| "administrator_#{n}@example.com" }
 
   sequence(:title) { |n| "#{Faker::Lorem.words} #{n}" }
+  sequence(:category_name) { |n| "Category_#{n}" }
 end
