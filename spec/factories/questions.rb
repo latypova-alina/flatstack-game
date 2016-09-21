@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :question do
-    question "MyString"
+    category
+    question { generate(:question) }
   end
 end

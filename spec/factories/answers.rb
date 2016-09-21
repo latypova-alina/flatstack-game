@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :answer do
-    answer "MyString"
+    answer { generate(:answer) }
+    question
+    truthy { Faker::Boolean.boolean }
   end
 end

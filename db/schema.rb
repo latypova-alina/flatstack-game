@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916110926) do
+ActiveRecord::Schema.define(version: 20160920115416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160916110926) do
     t.string   "state",            null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "winner_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -83,8 +84,10 @@ ActiveRecord::Schema.define(version: 20160916110926) do
   create_table "round_questions", force: :cascade do |t|
     t.integer  "round_id"
     t.integer  "question_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "first_player_answer_id"
+    t.integer  "second_player_answer_id"
   end
 
   add_index "round_questions", ["question_id"], name: "index_round_questions_on_question_id", using: :btree
@@ -92,10 +95,12 @@ ActiveRecord::Schema.define(version: 20160916110926) do
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
 
+  add_index "rounds", ["category_id"], name: "index_rounds_on_category_id", using: :btree
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -126,5 +131,9 @@ ActiveRecord::Schema.define(version: 20160916110926) do
 
   add_foreign_key "games", "users", column: "first_player_id"
   add_foreign_key "games", "users", column: "second_player_id"
+  add_foreign_key "games", "users", column: "winner_id"
   add_foreign_key "questions", "categories"
+  add_foreign_key "round_questions", "answers", column: "first_player_answer_id"
+  add_foreign_key "round_questions", "answers", column: "second_player_answer_id"
+  add_foreign_key "rounds", "categories"
 end

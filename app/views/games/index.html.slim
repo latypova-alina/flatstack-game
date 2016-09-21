@@ -1,24 +1,12 @@
 .row
-  h1 Мои игры
-  .medium-6.medium-centered.columns
-    = link_to "Начать новую игру", new_game_path, class: "button"
+  .medium-9.columns
+    ' Очки:
+    =  @current_user_score
+    br
 
-.row
-  h3 Мои игры
-  table.table
-    thead
-      th #
-      th Статус
-      th Игрок 1
-      th Игрок 2
-    tbody
-      - games.each do |game|
-        tr
-          td = game.id
-          td = game.state
-          td = game.first_player.full_name
-          td
-            - if game.second_player
-              = game.second_player.full_name
-            - else
-              | ОЖИДАНИЕ СОПЕРНИКА
+    ' Победы:
+    =  @victory
+    br
+
+    ' Поражение:
+    =  @defeat
