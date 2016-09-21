@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916110926) do
+ActiveRecord::Schema.define(version: 20160916144338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,24 +31,6 @@ ActiveRecord::Schema.define(version: 20160916110926) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
   create_table "answers", force: :cascade do |t|
     t.string   "answer"
     t.datetime "created_at",  null: false
@@ -66,10 +48,15 @@ ActiveRecord::Schema.define(version: 20160916110926) do
   create_table "games", force: :cascade do |t|
     t.integer  "first_player_id"
     t.integer  "second_player_id"
-    t.string   "state",            null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "state",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "current_player_id"
+    t.integer  "current_round_id"
   end
+
+  add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
+  add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "question"
@@ -124,6 +111,8 @@ ActiveRecord::Schema.define(version: 20160916110926) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "games", "rounds", column: "current_round_id"
+  add_foreign_key "games", "users", column: "current_player_id"
   add_foreign_key "games", "users", column: "first_player_id"
   add_foreign_key "games", "users", column: "second_player_id"
   add_foreign_key "questions", "categories"
