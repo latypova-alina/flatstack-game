@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
   expose(:games) { games_fetcher }
+  expose(:game)
 
   def index
   end
@@ -9,16 +10,9 @@ class GamesController < ApplicationController
   end
 
   def create
-    game = Game.new state: :waiting_for_second_player,
-                    first_player: current_user
-
-    game.second_player = User.bots.random.first if params[:type] == "bot"
-
-    game.state = :in_progress if game.both_players?
-
-    game.save
-
+    result = Games::BuildGame.call(type: params[:type], user: current_user, game: game)
     respond_with game
+    flash[:notice] = result.message if result.failure?
   end
 
   private
