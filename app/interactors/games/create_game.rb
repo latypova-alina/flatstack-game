@@ -16,13 +16,10 @@ module Games
     end
 
     def search_for_second_player(game)
-      game.second_player = User.bots.random.first if type == "bot"
-      change_state(game)
-    end
-
-    def change_state(game)
-      game.state = :in_progress if game.both_players?
-      game.save || context.fail!
+      if type == "bot"
+        game.second_player = User.bots.random.first
+        game.current_player = user
+      end
       context.game = game if context.success?
     end
   end
