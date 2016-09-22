@@ -14,7 +14,7 @@ module Rounds
       3.times do
         game.rounds.create || context.fail!
       end
-      context.game = game if context.success?
+      game.current_round = game.rounds.first
     end
   end
 end
