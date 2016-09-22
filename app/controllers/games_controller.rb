@@ -23,7 +23,7 @@ class GamesController < ApplicationController
   def games_fetcher
     Game.includes(:first_player)
         .includes(:second_player)
-        .includes(rounds: [round_questions: %i(first_player_answer_id second_player_answer_id)])
+        .includes(rounds: [round_questions: %i(first_player_answer second_player_answer)])
         .where("first_player_id = ? OR second_player_id = ?", current_user.id, current_user.id)
   end
 
@@ -64,10 +64,8 @@ class GamesController < ApplicationController
     second_player_score = 0
     game.rounds.each do |round|
       round.round_questions.each do |round_question|
-        answer = Answer.find_or_create_by id: round_question.first_player_answer_id
-        first_player_score += 1 if answer.truthy
-        answer = Answer.find_or_create_by id: round_question.second_player_answer_id
-        second_player_score += 1 if answer.truthy
+        first_player_score += 1 if round_question.first_player_answer && round_question.first_player_answer.truthy
+        second_player_score += 1 if round_question.second_player_answer && round_question.second_player_answer.truthy
       end
     end
     { first: first_player_score, second: second_player_score }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920115416) do
+ActiveRecord::Schema.define(version: 20160922120847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20160920115416) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "answers", force: :cascade do |t|
+  create_table "answer_variants", force: :cascade do |t|
     t.string   "answer"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20160920115416) do
   add_foreign_key "games", "users", column: "second_player_id"
   add_foreign_key "games", "users", column: "winner_id"
   add_foreign_key "questions", "categories"
-  add_foreign_key "round_questions", "answers", column: "first_player_answer_id"
-  add_foreign_key "round_questions", "answers", column: "second_player_answer_id"
+  add_foreign_key "round_questions", "answer_variants", column: "first_player_answer_id"
+  add_foreign_key "round_questions", "answer_variants", column: "second_player_answer_id"
   add_foreign_key "rounds", "categories"
 end
