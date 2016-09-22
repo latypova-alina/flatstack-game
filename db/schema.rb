@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922120847) do
+ActiveRecord::Schema.define(version: 20160922145730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(version: 20160922120847) do
     t.datetime "updated_at",       null: false
     t.integer  "winner_id"
   end
+
+  create_table "player_answers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "question_id"
+    t.integer "answer_variant_id"
+    t.boolean "truthy"
+  end
+
+  add_index "player_answers", ["answer_variant_id"], name: "index_player_answers_on_answer_variant_id", using: :btree
+  add_index "player_answers", ["question_id"], name: "index_player_answers_on_question_id", using: :btree
+  add_index "player_answers", ["user_id"], name: "index_player_answers_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "question"
@@ -132,6 +143,9 @@ ActiveRecord::Schema.define(version: 20160922120847) do
   add_foreign_key "games", "users", column: "first_player_id"
   add_foreign_key "games", "users", column: "second_player_id"
   add_foreign_key "games", "users", column: "winner_id"
+  add_foreign_key "player_answers", "answer_variants"
+  add_foreign_key "player_answers", "questions"
+  add_foreign_key "player_answers", "users"
   add_foreign_key "questions", "categories"
   add_foreign_key "round_questions", "answer_variants", column: "first_player_answer_id"
   add_foreign_key "round_questions", "answer_variants", column: "second_player_answer_id"
