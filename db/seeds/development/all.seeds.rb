@@ -20,8 +20,8 @@ CSV.foreach("db/seeds/questions.csv", headers: true, header_converters: :symbol)
   question.answer_variants.create(answer: row[:wrong_answer_3], truthy: 0)
 end
 
-FactoryGirl.create(:user, full_name: "Brian Wilson", email: "brian@gmail.com")
-FactoryGirl.create(:user, full_name: "Peter Moore", email: "peter@gmail.com")
-FactoryGirl.create(:user, full_name: "Ruby Jones", email: "ruby@gmail.com")
+FactoryGirl.create(:user, email: "brian@gmail.com")
+FactoryGirl.create(:user, email: "peter@gmail.com")
+FactoryGirl.create(:user, email: "ruby@gmail.com")
 
 FactoryGirl.create :game, :finished, :player_5_vs_player_7
