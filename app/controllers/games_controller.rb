@@ -1,9 +1,12 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+
   expose(:games) { games_fetcher }
-  expose(:game)
+  expose(:player_answers)
 
   def index
+    @finished_games = finished_games
+    @current_games = current_games
     @current_user_score = correct_answers
     @victory = victory
     @defeat = defeat
@@ -23,51 +26,27 @@ class GamesController < ApplicationController
   def games_fetcher
     Game.includes(:first_player)
         .includes(:second_player)
-        .includes(rounds: [round_questions: %i(first_player_answer second_player_answer)])
         .where("first_player_id = ? OR second_player_id = ?", current_user.id, current_user.id)
   end
 
-  def correct_answers
-    score = 0
-    games.each do |game|
-      next if game.first_player != current_user && game.second_player != current_user
+  def finished_games
+    games.where("state='finished' AND (first_player_id=:id OR second_player_id = :id)", id: current_user.id)
+  end
 
-      g_score = game_score(game)
-      if game.first_player == current_user
-        score += g_score[:first]
-      else
-        score += g_score[:second]
-      end
-    end
-    score
+  def current_games
+    games.where("state!='finished' AND (first_player_id=:id OR second_player_id = :id)", id: current_user.id)
+  end
+
+  def correct_answers
+    player_answers.where(user_id: current_user, truthy: TRUE).count
   end
 
   def victory
-    victory = 0
-    games.each do |game|
-      victory += 1 if game.winner_id == current_user.id
-    end
-    victory
+    games.where(winner_id: current_user.id).count
   end
 
   def defeat
-    defeat = 0
-    games.each do |game|
-      next if game.state != "finished" && (game.first_player != current_user || game.second_player != current_user)
-      defeat += 1 if game.winner_id != current_user.id
-    end
-    defeat
-  end
-
-  def game_score(game)
-    first_player_score = 0
-    second_player_score = 0
-    game.rounds.each do |round|
-      round.round_questions.each do |round_question|
-        first_player_score += 1 if round_question.first_player_answer && round_question.first_player_answer.truthy
-        second_player_score += 1 if round_question.second_player_answer && round_question.second_player_answer.truthy
-      end
-    end
-    { first: first_player_score, second: second_player_score }
+    games.where("state='finished' AND winner_id!=:id AND (first_player_id=:id OR second_player_id = :id)",
+      id: current_user.id).count
   end
 end

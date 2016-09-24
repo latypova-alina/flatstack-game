@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   validates :full_name, presence: true
 
+  has_many :player_answers
+
   scope :bots, -> { where role: "bot" }
   scope :random, -> { order("RANDOM()") }
 

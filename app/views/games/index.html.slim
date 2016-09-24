@@ -1,5 +1,16 @@
 .row
   .medium-9.columns
+    h2 Мои игры
+    h3 Статистика
+
+    ' Завершенные игры:
+    =  @finished_games.size
+    br
+
+    ' Текущие игры:
+    =  @current_games.size
+    br
+
     ' Очки:
     =  @current_user_score
     br
@@ -8,5 +19,5 @@
     =  @victory
     br
 
-    ' Поражение:
+    ' Поражения:
     =  @defeat
