@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
 
+  expose(:game)
   expose(:games) { games_fetcher }
   expose(:player_answers)
 
@@ -30,15 +31,15 @@ class GamesController < ApplicationController
   end
 
   def finished_games
-    games.where("state='finished' AND (first_player_id=:id OR second_player_id = :id)", id: current_user.id)
+    games.where(state: "finished").count
   end
 
   def current_games
-    games.where("state!='finished' AND (first_player_id=:id OR second_player_id = :id)", id: current_user.id)
+    games.where.not(state: "finished").count
   end
 
   def correct_answers
-    player_answers.where(user_id: current_user, truthy: TRUE).count
+    current_user.player_answers.where(truthy: TRUE).count
   end
 
   def victory
@@ -46,7 +47,6 @@ class GamesController < ApplicationController
   end
 
   def defeat
-    games.where("state='finished' AND winner_id!=:id AND (first_player_id=:id OR second_player_id = :id)",
-      id: current_user.id).count
+    games.where(state: "finished").where.not(winner_id: current_user.id).count
   end
 end

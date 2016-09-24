@@ -1,14 +1,16 @@
 .row
   .medium-9.columns
     h2 Мои игры
+    = link_to "Начать новую игру", new_game_path, class: "button"
+
     h3 Статистика
 
     ' Завершенные игры:
-    =  @finished_games.size
+    =  @finished_games
     br
 
     ' Текущие игры:
-    =  @current_games.size
+    =  @current_games
     br
 
     ' Очки:
