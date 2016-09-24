@@ -8,9 +8,9 @@ class GamesController < ApplicationController
   def index
     @finished_games = finished_games
     @current_games = current_games
-    @current_user_score = correct_answers
-    @victory = victory
-    @defeat = defeat
+    @correct_answers = correct_answers
+    @victories = victories
+    @losses = losses
   end
 
   def new
@@ -42,11 +42,11 @@ class GamesController < ApplicationController
     current_user.player_answers.where(truthy: TRUE).count
   end
 
-  def victory
+  def victories
     games.where(winner_id: current_user.id).count
   end
 
-  def defeat
+  def losses
     games.where(state: "finished").where.not(winner_id: current_user.id).count
   end
 end
