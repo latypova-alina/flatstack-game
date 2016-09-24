@@ -1,5 +1,9 @@
 class Game < ActiveRecord::Base
+  scope :finished, -> { where(state: "finished") }
+
   has_many :rounds, dependent: :destroy
+
+  has_one :winner, class_name: "User", foreign_key: "winner_id"
 
   belongs_to :first_player, class_name: "User", foreign_key: "first_player_id"
   belongs_to :second_player, class_name: "User", foreign_key: "second_player_id"

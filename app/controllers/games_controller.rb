@@ -31,7 +31,7 @@ class GamesController < ApplicationController
   end
 
   def finished_games
-    games.where(state: "finished").count
+    games.finished.count
   end
 
   def current_games
@@ -39,14 +39,14 @@ class GamesController < ApplicationController
   end
 
   def correct_answers
-    current_user.player_answers.where(truthy: TRUE).count
+    current_user.player_answers.where(truthy: true).count
   end
 
   def victories
-    games.where(winner_id: current_user.id).count
+    games.where(winner: current_user).count
   end
 
   def losses
-    games.where(state: "finished").where.not(winner_id: current_user.id).count
+    games.finished.where.not(winner: current_user).count
   end
 end
