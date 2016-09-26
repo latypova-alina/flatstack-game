@@ -12,7 +12,7 @@ module Rounds
 
     def create_rounds
       3.times do
-        game.rounds.create || context.fail!
+        game.rounds.create
       end
       game.current_round = game.rounds.first
     end
