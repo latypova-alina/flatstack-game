@@ -2,28 +2,24 @@ module Games
   class CreateGame
     include Interactor
 
-    delegate :user, :type, :game, to: :context
+    delegate :current_user, :type, :game, to: :context
 
     def call
-      create_game
+      if type == "bot"
+        create_game_with_bot
+      else
+        create_game_with_player
+      end
     end
 
-    private
-
-    def create_game
-      game = Game.new state: :waiting_for_second_player, first_player: user
-      search_for_second_player(game)
+    def create_game_with_bot
+      context.game = Game.new first_player: current_user
+      game.second_player = User.bots.random.first
     end
 
-    def search_for_second_player(game)
-      game.second_player = User.bots.random.first if type == "bot"
-      change_state(game)
-    end
-
-    def change_state(game)
-      game.state = :in_progress if game.both_players?
-      game.save || context.fail!
-      context.game = game if context.success?
+    def create_game_with_player
+      context.game = Game.waiting_for_second_player.first || Game.new
+      game.persisted? ? game.second_player = current_user : game.first_player = current_user
     end
   end
 end

@@ -31,24 +31,6 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
-
   create_table "answer_variants", force: :cascade do |t|
     t.string   "answer"
     t.datetime "created_at",  null: false
@@ -70,6 +52,8 @@ ActiveRecord::Schema.define(version: 20160926105532) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "winner_id"
+    t.integer  "current_player_id"
+    t.integer  "current_round_id"
   end
 
   create_table "player_answers", force: :cascade do |t|
@@ -84,6 +68,9 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "player_answers", ["game_id"], name: "index_player_answers_on_game_id", using: :btree
   add_index "player_answers", ["question_id"], name: "index_player_answers_on_question_id", using: :btree
   add_index "player_answers", ["user_id"], name: "index_player_answers_on_user_id", using: :btree
+
+  add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
+  add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "question"
@@ -142,6 +129,8 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "games", "rounds", column: "current_round_id"
+  add_foreign_key "games", "users", column: "current_player_id"
   add_foreign_key "games", "users", column: "first_player_id"
   add_foreign_key "games", "users", column: "second_player_id"
   add_foreign_key "games", "users", column: "winner_id"

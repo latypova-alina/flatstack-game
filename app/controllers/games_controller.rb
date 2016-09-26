@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   expose(:game)
-  expose_decorated(:games) { games_fetcher }
+  expose(:games) { current_user.games }
   expose(:player_answers)
 
   def index
@@ -17,17 +17,13 @@ class GamesController < ApplicationController
   end
 
   def create
-    result = Games::BuildGame.call(type: params[:type], user: current_user, game: game)
-    respond_with game
-    flash[:notice] = result.message if result.failure?
-  end
-
-  private
-
-  def games_fetcher
-    Game.includes(:first_player)
-        .includes(:second_player)
-        .where("first_player_id = ? OR second_player_id = ?", current_user.id, current_user.id)
+    result = Games::BuildGame.call(type: params[:type], current_user: current_user)
+    if result.failure?
+      flash[:error] = result.message
+      redirect_to root_path
+    else
+      respond_with result.game.current_round
+    end
   end
 
   def finished_games
