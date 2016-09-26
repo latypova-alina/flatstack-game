@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :game do
     id 1
-    player_1 1
-    player_2 nil
-    state "new"
+    first_player 1
+    second_player nil
+    state "waiting_for_second_player"
 
     before(:create) do
       create(:user, id: 1)
