@@ -14,7 +14,7 @@ module Questions
     def select_round_question
       game_rounds.each do |round|
         3.times do
-          round.round_questions.create(question_id: Question.order("RANDOM()").first.id)
+          round.round_questions.create(question: Question.order("RANDOM()").first)
           game.save || context.fail!
         end
       end

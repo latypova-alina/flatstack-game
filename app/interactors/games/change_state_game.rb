@@ -11,7 +11,7 @@ module Games
     private
 
     def change_state
-      game.state = :in_progress if game.both_players?
+      game.state = game.both_players? ? :in_progress : :waiting_for_second_player
       game.save || context.fail!
     end
   end
