@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   scope :finished, -> { where(state: "finished") }
 
   has_many :rounds, dependent: :destroy
+  has_many :player_answers, dependent: :destroy
 
   has_one :winner, class_name: "User", foreign_key: "winner_id"
 

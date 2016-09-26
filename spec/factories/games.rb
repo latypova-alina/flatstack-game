@@ -9,29 +9,29 @@ FactoryGirl.define do
       round_2 = create(:round, game_id: item.id, category_id: 6)
       round_3 = create(:round, game_id: item.id, category_id: 17)
 
-      player_answer_1 = create(:player_answer, user_id: 5, question_id: 17, answer_variant_id: 66, truthy: false)
-      player_answer_2 = create(:player_answer, user_id: 5, question_id: 21, answer_variant_id: 81, truthy: true)
-      player_answer_3 = create(:player_answer, user_id: 5, question_id: 12, answer_variant_id: 45, truthy: true)
+      player_answer_1 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 17, answer_variant_id: 66, truthy: false)
+      player_answer_2 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 21, answer_variant_id: 81, truthy: true)
+      player_answer_3 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 12, answer_variant_id: 45, truthy: true)
 
-      player_answer_4 = create(:player_answer, user_id: 7, question_id: 17, answer_variant_id: 66, truthy: false)
-      player_answer_5 = create(:player_answer, user_id: 7, question_id: 21, answer_variant_id: 81, truthy: true)
-      player_answer_6 = create(:player_answer, user_id: 7, question_id: 12, answer_variant_id: 46, truthy: false)
+      player_answer_4 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 17, answer_variant_id: 66, truthy: false)
+      player_answer_5 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 21, answer_variant_id: 81, truthy: true)
+      player_answer_6 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 12, answer_variant_id: 46, truthy: false)
 
-      player_answer_7 = create(:player_answer, user_id: 7, question_id: 61, answer_variant_id: 241, truthy: true)
-      player_answer_8 = create(:player_answer, user_id: 7, question_id: 62, answer_variant_id: 245, truthy: true)
-      player_answer_9 = create(:player_answer, user_id: 7, question_id: 65, answer_variant_id: 257, truthy: true)
+      player_answer_7 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 61, answer_variant_id: 241, truthy: true)
+      player_answer_8 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 62, answer_variant_id: 245, truthy: true)
+      player_answer_9 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 65, answer_variant_id: 257, truthy: true)
 
-      player_answer_10 = create(:player_answer, user_id: 5, question_id: 61, answer_variant_id: 241, truthy: true)
-      player_answer_11 = create(:player_answer, user_id: 5, question_id: 62, answer_variant_id: 246, truthy: false)
-      player_answer_12 = create(:player_answer, user_id: 5, question_id: 65, answer_variant_id: 257, truthy: true)
+      player_answer_10 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 61, answer_variant_id: 241, truthy: true)
+      player_answer_11 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 62, answer_variant_id: 246, truthy: false)
+      player_answer_12 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 65, answer_variant_id: 257, truthy: true)
 
-      player_answer_13 = create(:player_answer, user_id: 5, question_id: 203, answer_variant_id: 810, truthy: false)
-      player_answer_14 = create(:player_answer, user_id: 5, question_id: 198, answer_variant_id: 792, truthy: false)
-      player_answer_15 = create(:player_answer, user_id: 5, question_id: 194, answer_variant_id: 774, truthy: false)
+      player_answer_13 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 203, answer_variant_id: 810, truthy: false)
+      player_answer_14 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 198, answer_variant_id: 792, truthy: false)
+      player_answer_15 = create(:player_answer, game_id: item.id, user_id: 5, question_id: 194, answer_variant_id: 774, truthy: false)
 
-      player_answer_16 = create(:player_answer, user_id: 7, question_id: 203, answer_variant_id: 809, truthy: true)
-      player_answer_17 = create(:player_answer, user_id: 7, question_id: 198, answer_variant_id: 792, truthy: false)
-      player_answer_18 = create(:player_answer, user_id: 7, question_id: 194, answer_variant_id: 773, truthy: true)
+      player_answer_16 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 203, answer_variant_id: 809, truthy: true)
+      player_answer_17 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 198, answer_variant_id: 792, truthy: false)
+      player_answer_18 = create(:player_answer, game_id: item.id, user_id: 7, question_id: 194, answer_variant_id: 773, truthy: true)
 
       create(:round_question,
         round_id: round_1.id,

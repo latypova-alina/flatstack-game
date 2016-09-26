@@ -2,12 +2,12 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   expose(:game)
-  expose(:games) { games_fetcher }
+  expose_decorated(:games) { games_fetcher }
   expose(:player_answers)
 
   def index
-    @finished_games = finished_games
-    @current_games = current_games
+    @finished_games = games.finished
+    @current_games = games.where.not(state: "finished")
     @correct_answers = correct_answers
     @victories = victories
     @losses = losses

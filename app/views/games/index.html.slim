@@ -6,20 +6,93 @@
     h3 Статистика
 
     ' Завершенные игры:
-    =  @finished_games
+    = @finished_games.size
     br
 
     ' Текущие игры:
-    =  @current_games
+    = @current_games.size
     br
 
     ' Очки:
-    =  @correct_answers
+    = @correct_answers
     br
 
     ' Победы:
-    =  @victories
+    = @victories
     br
 
     ' Поражения:
-    =  @losses
+    = @losses
+
+    h3 Игры
+    ul.tabs.horizontal data-tab=""
+      li.tab-title.active
+        a href="#panel1a" Текущие игры (#{@current_games.size})
+      li.tab-title
+        a href="#panel2a" Завершенные игры (#{@finished_games.size})
+    .tabs-content.horizontal
+      #panel1a.content.active
+        - unless @current_games.empty?
+          table
+            thead
+              th Противник
+              th Счет
+              th Статус
+              th
+            tbody
+              - @current_games.each do |game|
+                tr
+                  td
+                    - if game.state != "waiting_for_second_player"
+                      - if game.first_player == current_user
+                        = game.second_player.full_name
+                      - else
+                        = game.first_player.full_name
+                    - else
+                      | ???
+                  td
+                    - if game.first_player == current_user
+                      = game.player_answers.right_answers.where(user: game.first_player).count
+                      '  :
+                      = game.player_answers.right_answers.where(user: game.second_player).count
+                    - else
+                      = game.player_answers.right_answers.where(user: game.second_player).count
+                      '  :
+                      = game.player_answers.right_answers.where(user: game.first_player).count
+                  td
+                    - if game.state == "in_progress"
+                      | В процессе
+                    - else
+                      | Ожидание соперника
+                  td
+                    = link_to "перейти к игре"
+
+      #panel2a.content
+        - unless @finished_games.empty?
+          table
+            thead
+              th Противник
+              th Счет
+              th Результат
+            tbody
+              - @finished_games.each do |game|
+                tr
+                  td
+                    - if game.first_player == current_user
+                      = game.second_player.full_name
+                    - else
+                      = game.first_player.full_name
+                  td
+                    - if game.first_player == current_user
+                      = game.player_answers.right_answers.where(user: game.first_player).count
+                      '  :
+                      = game.player_answers.right_answers.where(user: game.second_player).count
+                    - else
+                      = game.player_answers.right_answers.where(user: game.second_player).count
+                      '  :
+                      = game.player_answers.right_answers.where(user: game.first_player).count
+                  td
+                    - if game.winner_id == current_user.id
+                      | Победа
+                    - else
+                      | Поражение
