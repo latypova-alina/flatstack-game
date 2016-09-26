@@ -12,7 +12,7 @@ class Game < ActiveRecord::Base
     finished: "finished"
   }
 
-  scope :finished, -> { where(state: 'finished') }
+  scope :finished, -> { where(state: "finished") }
   scope :waiting_for_second_player, -> { where(second_player: nil).order(created_at: :asc) }
 
   def both_players?

@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   def games
     Game.includes(:first_player)
         .includes(:second_player)
-        .where("first_player_id = ? OR second_player_id = ?", self.id, self.id)
+        .where("first_player_id = ? OR second_player_id = ?", id, id)
   end
 
   def self.from_omniauth(auth)
