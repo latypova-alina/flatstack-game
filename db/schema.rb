@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916144338) do
+ActiveRecord::Schema.define(version: 20160926105532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160916144338) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "answers", force: :cascade do |t|
+  create_table "answer_variants", force: :cascade do |t|
     t.string   "answer"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -51,12 +51,26 @@ ActiveRecord::Schema.define(version: 20160916144338) do
     t.string   "state",             null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "winner_id"
     t.integer  "current_player_id"
     t.integer  "current_round_id"
   end
 
   add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
   add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
+
+  create_table "player_answers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "question_id"
+    t.integer "answer_variant_id"
+    t.boolean "truthy"
+    t.integer "game_id"
+  end
+
+  add_index "player_answers", ["answer_variant_id"], name: "index_player_answers_on_answer_variant_id", using: :btree
+  add_index "player_answers", ["game_id"], name: "index_player_answers_on_game_id", using: :btree
+  add_index "player_answers", ["question_id"], name: "index_player_answers_on_question_id", using: :btree
+  add_index "player_answers", ["user_id"], name: "index_player_answers_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "question"
@@ -70,8 +84,10 @@ ActiveRecord::Schema.define(version: 20160916144338) do
   create_table "round_questions", force: :cascade do |t|
     t.integer  "round_id"
     t.integer  "question_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "first_player_answer_id"
+    t.integer  "second_player_answer_id"
   end
 
   add_index "round_questions", ["question_id"], name: "index_round_questions_on_question_id", using: :btree
@@ -79,10 +95,12 @@ ActiveRecord::Schema.define(version: 20160916144338) do
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
 
+  add_index "rounds", ["category_id"], name: "index_rounds_on_category_id", using: :btree
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -115,5 +133,13 @@ ActiveRecord::Schema.define(version: 20160916144338) do
   add_foreign_key "games", "users", column: "current_player_id"
   add_foreign_key "games", "users", column: "first_player_id"
   add_foreign_key "games", "users", column: "second_player_id"
+  add_foreign_key "games", "users", column: "winner_id"
+  add_foreign_key "player_answers", "answer_variants"
+  add_foreign_key "player_answers", "games"
+  add_foreign_key "player_answers", "questions"
+  add_foreign_key "player_answers", "users"
   add_foreign_key "questions", "categories"
+  add_foreign_key "round_questions", "answer_variants", column: "first_player_answer_id"
+  add_foreign_key "round_questions", "answer_variants", column: "second_player_answer_id"
+  add_foreign_key "rounds", "categories"
 end

@@ -14,8 +14,8 @@ CSV.foreach("db/seeds/questions.csv", headers: true, header_converters: :symbol)
 
   question = Question.create(question: row[:question], category: category)
 
-  question.answers.create(answer: row[:right_answer], truthy: 1)
-  question.answers.create(answer: row[:wrong_answer_1], truthy: 0)
-  question.answers.create(answer: row[:wrong_answer_2], truthy: 0)
-  question.answers.create(answer: row[:wrong_answer_3], truthy: 0)
+  question.answer_variants.create(answer: row[:right_answer], truthy: true)
+  question.answer_variants.create(answer: row[:wrong_answer_1], truthy: false)
+  question.answer_variants.create(answer: row[:wrong_answer_2], truthy: false)
+  question.answer_variants.create(answer: row[:wrong_answer_3], truthy: false)
 end
