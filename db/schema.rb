@@ -48,13 +48,16 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   create_table "games", force: :cascade do |t|
     t.integer  "first_player_id"
     t.integer  "second_player_id"
-    t.string   "state",            null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string   "state",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "winner_id"
     t.integer  "current_player_id"
     t.integer  "current_round_id"
   end
+
+  add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
+  add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
 
   create_table "player_answers", force: :cascade do |t|
     t.integer "user_id"
@@ -68,9 +71,6 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "player_answers", ["game_id"], name: "index_player_answers_on_game_id", using: :btree
   add_index "player_answers", ["question_id"], name: "index_player_answers_on_question_id", using: :btree
   add_index "player_answers", ["user_id"], name: "index_player_answers_on_user_id", using: :btree
-
-  add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
-  add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "question"

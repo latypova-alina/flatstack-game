@@ -14,14 +14,8 @@ CSV.foreach("db/seeds/questions.csv", headers: true, header_converters: :symbol)
 
   question = Question.create(question: row[:question], category: category)
 
-  question.answer_variants.create(answer: row[:right_answer], truthy: 1)
-  question.answer_variants.create(answer: row[:wrong_answer_1], truthy: 0)
-  question.answer_variants.create(answer: row[:wrong_answer_2], truthy: 0)
-  question.answer_variants.create(answer: row[:wrong_answer_3], truthy: 0)
+  question.answer_variants.create(answer: row[:right_answer], truthy: true)
+  question.answer_variants.create(answer: row[:wrong_answer_1], truthy: false)
+  question.answer_variants.create(answer: row[:wrong_answer_2], truthy: false)
+  question.answer_variants.create(answer: row[:wrong_answer_3], truthy: false)
 end
-
-FactoryGirl.create(:user, email: "brian@gmail.com")
-FactoryGirl.create(:user, email: "peter@gmail.com")
-FactoryGirl.create(:user, email: "ruby@gmail.com")
-
-FactoryGirl.create :game, :finished, :player_5_vs_player_7
