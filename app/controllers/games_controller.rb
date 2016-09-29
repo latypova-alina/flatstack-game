@@ -1,8 +1,11 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+
+  expose(:game)
   expose(:games) { current_user.games }
 
   def index
+    @games_statistic = UserGamesStatistic.new(current_user).games
   end
 
   def new

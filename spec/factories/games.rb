@@ -1,15 +1,15 @@
 FactoryGirl.define do
   factory :game do
-    id 1
-    first_player_id 1
-    second_player_id nil
-    state "waiting_for_second_player"
+    association :first_player, factory: :user
+    association :second_player, factory: :user
+    state "in_progress"
+  end
 
-    before(:create) do
-      create(:user, id: 1)
-      create(:round, game_id: 1)
-      create(:round, game_id: 1)
-      create(:round, game_id: 1)
-    end
+  trait :in_progress do
+    state "in_progress"
+  end
+
+  trait :finished do
+    state "finished"
   end
 end

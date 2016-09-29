@@ -1,24 +1,77 @@
 .row
-  h1 Мои игры
-  .medium-6.medium-centered.columns
+  .medium-9.columns
+    h2 Мои игры
     = link_to "Начать новую игру", new_game_path, class: "button"
 
-.row
-  h3 Мои игры
-  table.table
-    thead
-      th #
-      th Статус
-      th Игрок 1
-      th Игрок 2
-    tbody
-      - games.each do |game|
-        tr
-          td = game.id
-          td = game.state
-          td = game.first_player.full_name
-          td
-            - if game.second_player
-              = game.second_player.full_name
-            - else
-              | ОЖИДАНИЕ СОПЕРНИКА
+    h3 Статистика
+
+    ' Завершенные игры:
+    = @games_statistic[:finished].size
+    br
+
+    ' Текущие игры:
+    = @games_statistic[:current].size
+    br
+
+    ' Очки:
+    = @games_statistic[:correct_answers]
+    br
+
+    ' Победы:
+    = @games_statistic[:won]
+    br
+
+    ' Поражения:
+    = @games_statistic[:failed]
+
+    h3 Игры
+    ul.tabs.horizontal data-tab=""
+      li.tab-title.active
+        a href="#panel1a" Текущие игры (#{@games_statistic[:current].size})
+      li.tab-title
+        a href="#panel2a" Завершенные игры (#{@games_statistic[:finished].size})
+    .tabs-content.horizontal
+      #panel1a.content.active
+        - unless @games_statistic[:current].empty?
+          table
+            thead
+              th Игроки
+              th Статус
+              th
+            tbody
+              - @games_statistic[:current].each do |game|
+                tr
+                  td
+                    => game.first_player.full_name
+                    - if game.second_player.present?
+                      => game.first_player.player_answers.where(game: game, truthy: true).count
+                      ' -
+                      => game.second_player.player_answers.where(game: game, truthy: true).count
+                      = game.second_player.full_name
+                    - else
+                     ' - ???
+                  td
+                    - if game.in_progress?
+                      | В процессе
+                    - else
+                      | Ожидание соперника
+                  td
+                    = link_to "перейти к игре"
+
+      #panel2a.content
+        - unless @games_statistic[:finished].empty?
+          table
+            thead
+              th Игроки
+              th
+            tbody
+              - @games_statistic[:finished].each do |game|
+                tr
+                  td
+                    => game.first_player.full_name
+                    => game.first_player.player_answers.where(game: game, truthy: true).count
+                    ' -
+                    => game.second_player.player_answers.where(game: game, truthy: true).count
+                    = game.second_player.full_name
+                  td
+                    = link_to "перейти к игре"
