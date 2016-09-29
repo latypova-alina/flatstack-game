@@ -6,7 +6,7 @@ describe Rounds::CreateRounds do
     subject(:rounds) { described_class.call(game: game).game.rounds }
 
     it "creates new game with 3 rounds" do
-      expect(result.size).to eq(3)
+      expect(rounds.size).to eq(3)
     end
   end
 end

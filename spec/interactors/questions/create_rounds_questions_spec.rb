@@ -7,7 +7,7 @@ describe Questions::CreateRoundsQuestions do
     subject(:result) { described_class.call(game: game) }
     it do
       result.game.rounds.each do |round|
-        expect(r.round_questions.size).to eq(3)
+        expect(round.round_questions.size).to eq(3)
       end
     end
   end
