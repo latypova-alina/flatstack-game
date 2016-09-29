@@ -1,10 +1,10 @@
 require "rails_helper"
 
 describe UserGamesStatistic do
-  let!(:brian) { create :user }
-  let!(:first_game) { create :game, first_player: brian }
-  let!(:second_game) { create :game, first_player: brian, state: "finished", winner_id: brian.id }
-  let!(:statistic) { described_class.new(brian).games }
+  let!(:user) { create :user }
+  let!(:first_game) { create :game, first_player: user }
+  let!(:second_game) { create :game, first_player: user, state: "finished", winner_id: user.id }
+  let!(:statistic) { described_class.new(user).games }
 
   it "returns right finished games number" do
     expect(statistic[:finished].size).to eq(1)
