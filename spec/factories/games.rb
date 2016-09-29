@@ -5,8 +5,9 @@ FactoryGirl.define do
     state "in_progress"
   end
 
-  trait :in_progress do
-    state "in_progress"
+  trait :waiting_for_second_player do
+    state "waiting_for_second_player"
+    second_player nil
   end
 
   trait :finished do
