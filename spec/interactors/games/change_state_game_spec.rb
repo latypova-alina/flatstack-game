@@ -12,7 +12,7 @@ describe Games::ChangeStateGame do
     end
 
     context "game with one player" do
-      let(:game) { create :game, first_player: current_user }
+      let(:game) { create :game, :waiting_for_second_player, first_player: current_user }
       subject(:result) { described_class.call(game: game).game }
 
       it { expect(result.state).to eq("waiting_for_second_player") }

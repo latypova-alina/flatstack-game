@@ -14,8 +14,8 @@ describe Games::CreateGame do
 
     context "game with real player" do
       let!(:another_player) { create :user }
-      let!(:game) { create :game, first_player: another_player }
-      subject(:result) { described_class.call(current_user: current_user).game }
+      let!(:game) { create :game, first_player: another_player, second_player: nil }
+      subject!(:result) { described_class.call(current_user: current_user).game }
 
       it { expect([result.first_player, result.second_player]).to include(current_user, another_player) }
     end
