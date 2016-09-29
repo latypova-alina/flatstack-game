@@ -5,6 +5,7 @@ describe Questions::CreateRoundsQuestions do
 
   describe ".call" do
     subject(:result) { described_class.call(game: game) }
+
     it do
       result.game.rounds.each do |round|
         expect(round.round_questions.size).to eq(3)
