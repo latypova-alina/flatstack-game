@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  #
   ActiveAdmin.routes(self)
 
   devise_for :users, controllers:
@@ -7,4 +8,7 @@ Rails.application.routes.draw do
   root to: "games#index"
   resources :games
   resources :rounds
+  resources :round_questions do
+    resources :player_answers
+  end
 end

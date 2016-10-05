@@ -1,0 +1,10 @@
+.row
+  .medium-8.columns
+    h3
+      ' Вопрос
+      = round_question.index
+
+    h4
+      = round_question.question.question
+
+    = render "form"

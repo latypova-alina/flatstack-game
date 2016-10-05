@@ -1,0 +1,25 @@
+table.table.table-striped
+  thead
+    tr
+        th Actions
+
+  - player_answers.each do |player_answer|
+    tr
+      td.actions
+        = link_to(player_answer, class: 'btn') do
+          i.fi-eye
+          |  Show
+        = link_to(edit_player_answer_path(player_answer), class: 'btn') do
+          i.fi-pencil
+          |  Edit
+        = link_to(player_answer, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }) do
+          i.fi-trash
+          |  Delete
+
+.paginator
+  = paginate(player_answers)
+
+br
+= link_to new_player_answer_path, class: 'btn btn-primary' do
+  i.fi-plus
+  |  New Player answer

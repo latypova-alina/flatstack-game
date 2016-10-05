@@ -1,0 +1,10 @@
+.scaffold-form
+  = simple_form_for([round_question, player_answer]) do |f|
+    .form-inputs
+      - answer_variants.each do |answer_variant|
+        = radio_button_tag(:answer_variant_id, answer_variant.id)
+        = label_tag(:answer_variant_id, answer_variant.answer)
+        br
+
+    .form-actions
+      = f.button :submit

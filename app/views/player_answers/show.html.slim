@@ -1,0 +1,9 @@
+.show-item
+  .well.player_answer.form-horizontal
+
+  .form-actions
+    = link_to(edit_player_answer_path(player_answer), class: 'btn btn-primary') do
+      i.fi-pencil
+      | Edit
+    '  or
+    = link_to 'Back', :back

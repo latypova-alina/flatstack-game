@@ -56,7 +56,7 @@
                     - else
                       | Ожидание соперника
                   td
-                    = link_to "перейти к игре"
+                    = link_to "перейти к игре", round_path(game.current_round.current_round_question)
 
       #panel2a.content
         - unless @games_statistic[:finished].empty?
