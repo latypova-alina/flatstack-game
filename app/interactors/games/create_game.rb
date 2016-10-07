@@ -19,7 +19,7 @@ module Games
 
     def create_game_with_player
       context.game = Game.waiting_for_second_player.first || Game.new
-      game.persisted? ? game.second_player = current_user : game.first_player = current_user
+      game.persisted? ? game.second_player = User.second_player(current_user) : game.first_player = current_user
     end
   end
 end

@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   scope :bots, -> { where role: "bot" }
   scope :random, -> { order("RANDOM()") }
+  scope :second_player, -> (current_user) { where("id <> ?", current_user.id).first}
 
   enum role: {
     bot: "bot",
