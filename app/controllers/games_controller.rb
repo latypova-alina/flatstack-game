@@ -16,6 +16,8 @@ class GamesController < ApplicationController
     if result.failure?
       flash[:error] = result.message
       redirect_to root_path
+    elsif  (result.game.state == "waiting_for_second_player") && (params[:type] != "bot")
+      redirect_to result.game
     else
       respond_with result.game.current_round
     end
