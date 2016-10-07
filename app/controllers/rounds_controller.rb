@@ -15,10 +15,8 @@ class RoundsController < ApplicationController
   def update
     round.save
 
-    index = 1
-    3.times do
-      round.round_questions.create(question: round.category.questions.order("RANDOM()").first, index: index)
-      index += 1
+    3.times do |n|
+      round.round_questions.create(question: round.category.random_question, index: n + 1)
     end
 
     round.current_round_question = round.round_questions.first
