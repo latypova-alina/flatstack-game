@@ -12,7 +12,7 @@ module Rounds
 
     def create_rounds
       3.times do |n|
-        game.rounds.create index: n+1
+        game.rounds.create index: n + 1
       end
 
       game.current_round = game.rounds.first
