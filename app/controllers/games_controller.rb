@@ -19,7 +19,7 @@ class GamesController < ApplicationController
     elsif  (result.game.state == "waiting_for_second_player") && (params[:type] != "bot")
       redirect_to result.game
     else
-      respond_with result.game.current_round
+      redirect_to edit_round_path(result.game.current_round)
     end
   end
 end

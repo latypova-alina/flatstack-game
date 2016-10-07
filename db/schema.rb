@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20161007123909) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,10 +55,12 @@ ActiveRecord::Schema.define(version: 20161007123909) do
     t.integer  "winner_id"
     t.integer  "current_player_id"
     t.integer  "current_round_id"
+    t.integer  "round_id"
   end
 
   add_index "games", ["current_player_id"], name: "index_games_on_current_player_id", using: :btree
   add_index "games", ["current_round_id"], name: "index_games_on_current_round_id", using: :btree
+  add_index "games", ["round_id"], name: "index_games_on_round_id", using: :btree
 
   create_table "player_answers", force: :cascade do |t|
     t.integer "user_id"
@@ -88,6 +91,7 @@ ActiveRecord::Schema.define(version: 20161007123909) do
     t.datetime "updated_at",              null: false
     t.integer  "first_player_answer_id"
     t.integer  "second_player_answer_id"
+    t.integer  "index"
   end
 
   add_index "round_questions", ["question_id"], name: "index_round_questions_on_question_id", using: :btree
@@ -95,12 +99,16 @@ ActiveRecord::Schema.define(version: 20161007123909) do
 
   create_table "rounds", force: :cascade do |t|
     t.integer  "game_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "category_id"
+    t.string   "status"
+    t.integer  "index"
+    t.integer  "current_round_question_id"
   end
 
   add_index "rounds", ["category_id"], name: "index_rounds_on_category_id", using: :btree
+  add_index "rounds", ["current_round_question_id"], name: "index_rounds_on_current_round_question_id", using: :btree
   add_index "rounds", ["game_id"], name: "index_rounds_on_game_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -129,6 +137,7 @@ ActiveRecord::Schema.define(version: 20161007123909) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "games", "rounds"
   add_foreign_key "games", "rounds", column: "current_round_id"
   add_foreign_key "games", "users", column: "current_player_id"
   add_foreign_key "games", "users", column: "first_player_id"
@@ -142,4 +151,5 @@ ActiveRecord::Schema.define(version: 20161007123909) do
   add_foreign_key "round_questions", "answer_variants", column: "first_player_answer_id"
   add_foreign_key "round_questions", "answer_variants", column: "second_player_answer_id"
   add_foreign_key "rounds", "categories"
+  add_foreign_key "rounds", "round_questions", column: "current_round_question_id"
 end

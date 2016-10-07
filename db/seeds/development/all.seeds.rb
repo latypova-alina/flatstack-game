@@ -12,7 +12,9 @@ CSV.foreach("db/seeds/questions.csv", headers: true, header_converters: :symbol)
 
   next if Question.where(question: row[:question]).any?
 
-  question = Question.create(question: row[:question], category: category)
+  question = Question.new(question: row[:question], category: category)
+
+  next unless question.save
 
   question.answer_variants.create(answer: row[:right_answer], truthy: true)
   question.answer_variants.create(answer: row[:wrong_answer_1], truthy: false)

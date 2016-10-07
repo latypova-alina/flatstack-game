@@ -1,0 +1,12 @@
+.row
+  .medium-8.columns
+    h3
+      ' Вопрос
+      = round_question.index
+
+    h4
+      = round_question.question.question
+
+    - answer_variants.each do |answer_variant|
+      = link_to answer_variant.answer
+      br

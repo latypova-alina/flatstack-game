@@ -3,4 +3,8 @@ class Category < ActiveRecord::Base
   validates :name, uniqueness: true
 
   has_many :questions
+
+  def random_question
+    questions.order("RANDOM()").first
+  end
 end
