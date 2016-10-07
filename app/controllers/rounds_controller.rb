@@ -15,9 +15,7 @@ class RoundsController < ApplicationController
   def update
     round.save
 
-    3.times do |n|
-      round.round_questions.create(question: round.category.random_question, index: n + 1)
-    end
+    create_rounds
 
     round.current_round_question = round.round_questions.first
     round.save
@@ -29,5 +27,11 @@ class RoundsController < ApplicationController
 
   def round_params
     params.require(:round).permit(:category_id)
+  end
+
+  def create_rounds
+    3.times do |n|
+      round.round_questions.create(question: round.category.random_question, index: n + 1)
+    end
   end
 end
