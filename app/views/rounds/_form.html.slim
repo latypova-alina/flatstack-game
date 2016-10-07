@@ -1,0 +1,7 @@
+.scaffold-form
+  = simple_form_for(round) do |f|
+    .form-inputs
+      = f.collection_select(:category_id, categories, :id, :name)
+
+    .form-actions
+      = f.button :submit
