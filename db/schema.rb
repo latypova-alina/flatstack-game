@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926105532) do
+ActiveRecord::Schema.define(version: 20161007123909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "answer_variants", force: :cascade do |t|
-    t.string   "answer"
+    t.string   "answer_text"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "question_id"
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(version: 20160926105532) do
   add_index "player_answers", ["user_id"], name: "index_player_answers_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "question"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "question_text"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "category_id"
   end
 
